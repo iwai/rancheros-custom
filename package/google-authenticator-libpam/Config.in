@@ -1,0 +1,6 @@
+config BR2_PACKAGE_GOOGLE_AUTHENTICATOR_LIBPAM
+	bool "google-authenticator-libpam"
+	help
+	  PAM module for two-factor authentication
+
+	  https://github.com/google/google-authenticator-libpam
