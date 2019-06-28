@@ -1,6 +1,0 @@
-[submodule "os"]
-	path = os
-	url = https://github.com/rancher/os.git
-[submodule "os-base"]
-	path = os-base
-	url = https://github.com/rancher/os-base.git
