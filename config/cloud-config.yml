@@ -1,8 +1,9 @@
 #cloud-config
 ssh_authorized_keys:
-  - "github:iwai"
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrx6M0I7tFMfxXby9T+UJwE2WBvaNMJ5lGg+BsZ1jkwG+V6Ea5JxnNBo9us6KN138k66kYjHH8EU7l8O0KTdKap1RSD+tHWUyFegHMFxIxEvWddy7b768fu1+doTHPjLRmGMLHEzZGIa3hWl5bVbj7dPqcqul19pIYt1cvS63Wuswh0l8PF5LsllQCBiTqvlPNjLCN9wfxJTCNd857jyYQUHHLxlDIen4XqBL6AIAQKlFkigdrkE7h+Mulof0eb0Fsdu2KPHNXiYv4Aqwaf9QRRvPbbxhCD22jyKqcFxvOg/YHCRi5aoKWrIrxHJL642qkRSVhIA8ruQLt87PEwYnd
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7vuimsqSgysyCdgSOmQtRkG+ybtFjTEdyrrn+x6XIh
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZnqvgx19Ym68RWFOHr+FXYVt09hyMlWXsScjEF21mC
+  - "github:iwai"
 
 runcmd:
   - google-authenticator --time-based --disallow-reuse --rate-limit=3 --rate-time=30 --qr-mode=NONE --force --quiet --window-size=3
