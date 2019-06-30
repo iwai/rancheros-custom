@@ -1,0 +1,6 @@
+#cloud-config
+ssh_authorized_keys:
+  - "github:iwai"
+
+runcmd:
+  - google-authenticator --time-based --disallow-reuse --rate-limit=3 --rate-time=30 --qr-mode=NONE --force --quiet --window-size=3
