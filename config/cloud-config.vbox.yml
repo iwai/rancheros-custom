@@ -1,0 +1,63 @@
+#cloud-config
+rancher:
+  services:
+    console:
+      environment:
+        TZ: JST-9
+
+ssh_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZnqvgx19Ym68RWFOHr+FXYVt09hyMlWXsScjEF21mC
+
+write_files:
+  - path: /etc/ssh/sshd_config
+    content: |
+      # Logging
+      SyslogFacility AUTHPRIV
+
+      AuthorizedKeysFile .ssh/authorized_keys
+
+      UsePAM yes
+
+      ClientAliveInterval 180
+
+      # Authentication:
+      PasswordAuthentication no
+      PermitRootLogin no
+      LoginGraceTime 30
+      MaxAuthTries 3
+      MaxSessions  2
+
+      # For Google Authenticator
+      ChallengeResponseAuthentication yes
+      AuthenticationMethods publickey,keyboard-interactive
+      #AuthenticationMethods any
+
+      UseDNS no
+
+      AllowGroups docker
+
+      Subsystem	sftp /usr/libexec/sftp-server
+
+  - path: /etc/pam.d/sshd-origin
+    content: |
+      #%PAM-1.0
+      auth       required     /lib/security/pam_unix.so shadow nodelay
+      account    required     /lib/security/pam_nologin.so
+      account    required     /lib/security/pam_unix.so
+      password   required     /lib/security/pam_unix.so shadow nullok use_authtok
+      session    required     /lib/security/pam_unix.so
+      session    required     /lib/security/pam_limits.so
+
+  - path: /etc/pam.d/sshd-otpauth
+    content: |
+      auth       required     pam_nologin.so
+      auth       required     /usr/lib/security/pam_google_authenticator.so nullok
+      auth       required     pam_permit.so
+      auth       required     pam_env.so
+      account    required     pam_unix.so
+      session    required     pam_limits.so
+      session    required     pam_unix.so
+
+runcmd:
+  - rm /etc/pam.d/sshd && ln -nfs /etc/pam.d/sshd-otpauth /etc/pam.d/sshd
+  - sudo -u rancher sh -c "test -e ~/.google_authenticator || google-authenticator --no-confirm --time-based --disallow-reuse --rate-limit=3 --rate-time=30 --force --window-size=3 > ~/otpauth.log"
