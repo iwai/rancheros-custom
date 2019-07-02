@@ -1,8 +1,8 @@
 # Custom RancherOS
 
+google-authenticator-libpamを組み込んだRancherOSの作成
 
-
-### 準備
+## 準備
 
 カスタマイズしたいバージョンのRancherOSのレポジトリをダウンロード
 
@@ -12,7 +12,9 @@ git clone https://github.com/rancher/os-base.git -b v2018.02.11-1
 git clone https://github.com/rancher/os-packer.git
 ```
 
-### ビルド
+## ビルド
+
+### ISO image
 
 ビルド環境を起動してビルドを行います、Docker for Macで起動するLinux Kernelのバージョンは、やや古いため、新しいカーネルを利用しているLinuxディストリビューションをVagrantで起動して、そちらでビルドの実施をします。
 
@@ -24,7 +26,11 @@ make build-os-base
 # os-base/dist/ 以下を確認
 
 make release-os-base
+```
 
+### Image for cloud service
+
+```bash
 # OSを作成する時？にregistryへのアクセスでloginしてないとダウンロードできない？
 docker login
 
@@ -32,6 +38,13 @@ make build-os
 # os/dist/ 以下を確認
 ```
 
+### Image for VirtualBox/VagrantBox
+
+```bash
+packer build -force packer.json 
+```
+
+https://www.packer.io/docs/builders/virtualbox-ovf.html#boot-command
 
 
 ## Reference
