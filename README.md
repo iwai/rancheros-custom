@@ -41,11 +41,9 @@ make build-os
 ### Image for VirtualBox/VagrantBox
 
 ```bash
-packer build -force packer.json 
+cd packer/
+packer build -force packer.json
 ```
-
-https://www.packer.io/docs/builders/virtualbox-ovf.html#boot-command
-
 
 ## Reference
 
@@ -61,3 +59,8 @@ https://www.packer.io/docs/builders/virtualbox-ovf.html#boot-command
 - https://rancher.com/docs/os/v1.x/en/installation/configuration/
 - https://cloudinit.readthedocs.io/en/latest/index.html
 - https://qiita.com/aoya6i/items/cf02c62e5f402fc4a835
+
+### Create vagrantbox
+
+- https://www.vagrantup.com/docs/boxes/base.html
+- https://www.packer.io/docs/builders/virtualbox-ovf.html#boot-command

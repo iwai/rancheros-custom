@@ -2,3 +2,6 @@
 os
 os-base
 os-packer
+
+packer/packer_cache
+packer/output*

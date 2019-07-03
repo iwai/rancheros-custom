@@ -1,0 +1,49 @@
+{
+    "variables": {
+        "iso_url": "https://github.com/iwai/rancheros-custom/releases/download/v1.5.2/rancheros.iso",
+        "iso_checksum": "b1cc53e853bb9cda76877737218d9d75",
+        "version": "v1.5.2"
+    },
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "guest_os_type": "Linux_64",
+            "headless": false,
+            "memory": 1024,
+            "disk_size": 8000,
+
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum_type": "md5",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "guest_additions_mode": "disable",
+
+            "http_directory": "../",
+
+            "boot_wait": "20s",
+            "boot_command": [
+                "sudo ros install -c http://{{ .HTTPIP }}:{{ .HTTPPort }}/config/cloud-config.vagrant.yml -d /dev/sda<enter><wait>",
+                "y<enter><wait5>",
+                "y<enter><wait10>"
+            ],
+            "shutdown_command": "",
+            "communicator": "none",
+            "virtualbox_version_file": "",
+
+            "keep_registered": false,
+
+            "vm_name": "rancheros-{{ user `version` }}",
+            "vboxmanage": [
+                [ "modifyvm", "{{.Name}}", "--memory", 1024 ],
+                [ "modifyvm", "{{.Name}}", "--cpus", 2 ]
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "rancheros.{{ user `version` }}.box",
+            "compression_level": 9,
+            "vagrantfile_template": "./template/Vagrantfile"
+        }
+    ]
+}
